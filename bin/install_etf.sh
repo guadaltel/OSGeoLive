@@ -113,7 +113,7 @@ fi
 mkdir -p "$TMP"
 cd "$TMP"
 wget -c --no-check-certificate https://github.com/etf-validator/OSGeoLive-ETF/releases/download/OSGeoLive15.0-alpha/ETF.war
-wget -c --no-check-certificate https://github.com/etf-validator/OSGeoLive-ETF/releases/download/OSGeoLive15.0-alpha/ets-repository-2022.1.zip
+wget -c --no-check-certificate https://github.com/inspire-eu-validation/ets-repository/archive/refs/heads/os-geolive.zip
 
 #
 # copy logo
@@ -152,7 +152,7 @@ wait
 if [ ! -d "$ETF_FOLDER/projects/inspire-ets-repository/ets-repository-2022.1" ];then
 	sudo mkdir "$ETF_FOLDER/projects/inspire-ets-repository/"
 	cd "$ETF_FOLDER/projects/inspire-ets-repository/"
-	sudo unzip -o "$TMP/ets-repository-2022.1.zip"
+	sudo unzip -o "$TMP/os-geolive.zip"
 fi
 #
 # It makes modifiable the folder containing jetty for it to work perfectly
