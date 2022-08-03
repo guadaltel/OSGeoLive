@@ -3,7 +3,7 @@
 #
 # Purpose: This script will install INSPIRE ETF
 # Author:
-# Version 2020-08-28
+# Version 2022-08-03
 #
 #############################################################################
 # Copyright (c) 2011-2019 The Open Source Geospatial Foundation and others.
