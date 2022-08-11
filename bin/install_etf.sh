@@ -151,11 +151,15 @@ sudo sed -i "s/jetty.http.port=8080/jetty.http.port=$ETF_PORT/g" "$JETTY9_HOME/s
 /usr/share/jetty9/bin/jetty.sh start
 wait
 /usr/share/jetty9/bin/jetty.sh stop
+
+
 if [ ! -d "$ETF_FOLDER/projects/inspire-ets-repository/ets-repository-osgeolive-15" ];then
+	
 	sudo mkdir "$ETF_FOLDER/projects/inspire-ets-repository/"
 	cd "$ETF_FOLDER/projects/inspire-ets-repository/"
 	sudo unzip -o "$TMP/ets-repository-osgeolive-15.zip"
 fi
+sudo chmod -R 777 "$ETF_FOLDER/projects"
 #
 # It makes modifiable the folder containing jetty for it to work perfectly
 #
@@ -178,11 +182,22 @@ SERVICEJETTY=\`systemctl status jetty9 | grep "Active: active" | wc -l\`
 if [ \$SERVICEJETTY -eq 1 ]; then
 	systemctl stop jetty9
 fi
-sed -i "s/jetty.port=8080/jetty.port=$ETF_PORT/g" "$JETTY9_HOME/start.ini"
-sed -i "s/jetty.http.port=8080/jetty.http.port=$ETF_PORT/g" "$JETTY9_HOME/start.ini"
+
 DELAY=90
 JETTY9=\`/usr/share/jetty9/bin/jetty.sh status | grep "Jetty running pid=" | wc -l\`
 if [ \$JETTY9 -ne 1 ]; then
+
+	sed -i "s/jetty.port=8080/jetty.port=9090/g" "$JETTY9_HOME/start.ini"
+	sed -i "s/jetty.http.port=8080/jetty.http.port=9090/g" "$JETTY9_HOME/start.ini"
+	mkdir -p "$TMP"
+	cd "$TMP"
+	rm -r "$TMP/ets-repository-osgeolive-15.zip"
+	wget -c --no-check-certificate https://github.com/etf-validator/OSGeoLive-ETF/releases/download/OSGeoLive15.0/ets-repository-osgeolive-15.zip
+	rm -r "$ETF_FOLDER/projects/inspire-ets-repository"
+	mkdir "$ETF_FOLDER/projects/inspire-ets-repository"
+	unzip -o "$TMP/ets-repository-osgeolive-15.zip" -d "$ETF_FOLDER/projects/inspire-ets-repository/"
+	wait
+	
 	/usr/share/jetty9/bin/jetty.sh start &
 	( 
 	for TIME in \`seq \$DELAY\`; do
