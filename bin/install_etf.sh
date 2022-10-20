@@ -148,9 +148,9 @@ rm -rf "$ETF_FOLDER"
 # It puts the ETS repository to its place
 #
 sudo sed -i "s/jetty.http.port=8080/jetty.http.port=$ETF_PORT/g" "$JETTY9_HOME/start.ini"
-/usr/share/jetty9/bin/jetty.sh start
+sudo -u user /usr/share/jetty9/bin/jetty.sh start
 wait
-/usr/share/jetty9/bin/jetty.sh stop
+sudo -u user /usr/share/jetty9/bin/jetty.sh stop
 if [ ! -d "$ETF_FOLDER/projects/inspire-ets-repository/ets-repository-osgeolive-15" ];then
 	sudo mkdir "$ETF_FOLDER/projects/inspire-ets-repository/"
 	cd "$ETF_FOLDER/projects/inspire-ets-repository/"
